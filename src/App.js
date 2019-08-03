@@ -26,6 +26,20 @@ function App() {
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
+  function handleSpecialClick(specialString){
+    console.log(specialString, "in function");
+    if(specialString=="+/-"){
+      let newDisplayString = display.toString();
+      if(newDisplayString[0] != "-"){
+        newDisplayString = "-" + newDisplayString;
+      } else {
+        newDisplayString = newDisplayString.slice(1);
+      }
+      setDisplay(newDisplayString);
+      
+    }
+  }
+
   function handleNumberClick(numberString) {
     let newNumber;
 
@@ -60,8 +74,6 @@ function App() {
   }
 
   function handleOperatorClick(operator) {
-    
-    // console.log(typeof(3.55));
     if (
       (operator === "+" ||
         operator === "-" ||
@@ -85,91 +97,70 @@ function App() {
       setHoldOperator(operator);
     }
 
-    if (operator == "=" && newDisplay==true && holdEquals==true) {
+    if (operator == "=" && newDisplay == true && holdEquals == true) {
       let displayConvert;
       let equalNumberConvert;
 
-      if(display.toString().includes(".")){
+      if (display.toString().includes(".")) {
         displayConvert = parseFloat(display);
-      } else{
+      } else {
         displayConvert = parseInt(display);
       }
-      if(equalNumber.toString().includes(".")){
+      if (equalNumber.toString().includes(".")) {
         equalNumberConvert = parseFloat(equalNumber);
-      } else{
+      } else {
         equalNumberConvert = parseInt(equalNumber);
       }
 
-//Need to account for exponents ******************************************************
-switch(holdOperator){
+      switch (holdOperator) {
+        case "+":
+          let sum = displayConvert + equalNumberConvert;
 
+          if (sum.toString().length > 11) {
+            console.log(typeof sum);
 
- 
+            setDisplay(sum.toExponential(6));
+          } else {
+            setDisplay(sum);
+          }
 
+          setFirstNumber(null);
 
+          break;
+        case "-":
+          let difference = displayConvert - equalNumberConvert;
+          if (difference.toString().length > 11) {
+            setDisplay(difference.toExponential(6));
+          } else {
+            setDisplay(difference);
+          }
+          setFirstNumber(null);
 
-  case "+":
-      let sum=displayConvert+equalNumberConvert;
-      
-      if ((sum).toString().length > 11) {
-        console.log(typeof(sum));
+          break;
 
-        setDisplay(sum.toExponential(6));
-      } else {
-        setDisplay(sum);
+        case "*":
+          let product = displayConvert * equalNumberConvert;
+          if (product.toString().length > 11) {
+            setDisplay(product.toExponential(6));
+          } else {
+            setDisplay(product);
+          }
+          setFirstNumber(null);
+
+          break;
+
+        case "/":
+          let quotient = displayConvert / equalNumberConvert;
+          if (quotient.toString().length > 11) {
+            setDisplay(quotient.toExponential(6));
+          } else {
+            setDisplay(quotient);
+          }
+
+          setFirstNumber(null);
+
+          break;
       }
-
-    
-    setFirstNumber(null);
-
-  break;
-  case "-":
-
-      let difference=displayConvert-equalNumberConvert;
-      if ((difference).toString().length > 11) {
-
-        setDisplay((difference).toExponential(6));
-      } else {
-        setDisplay(difference);
-      }
-
-
-      // setDisplay(displayConvert - equalNumberConvert);
-      setFirstNumber(null);
-
-  break;
-
-  case "*":
-
-      let product=displayConvert*equalNumberConvert;
-      if ((product).toString().length > 11) {
-
-        setDisplay((product).toExponential(6));
-      } else {
-        setDisplay(product);
-      }
-
-      // setDisplay(displayConvert * equalNumberConvert);
-      setFirstNumber(null);
-
-  break;
-
-  case "/":
-      let quotient=displayConvert/equalNumberConvert;
-      if ((quotient).toString().length > 11) {
-
-        setDisplay((quotient).toExponential(6));
-      } else {
-        setDisplay(quotient);
-      }
-
-      // setDisplay(displayConvert / equalNumberConvert);
-      setFirstNumber(null);
-
-  break;
-}
-
-
     }
 
     if (
@@ -181,29 +172,26 @@ switch(holdOperator){
       firstNumber != null &&
       newDisplay == false
     ) {
-      // setFirstNumber(display);
-      
+
       let first;
       let second;
 
-      if(firstNumber.toString().includes(".")){
+      if (firstNumber.toString().includes(".")) {
         first = parseFloat(firstNumber);
-      } else{
+      } else {
         first = parseInt(firstNumber);
       }
-      if(display.includes(".")){
+      if (display.includes(".")) {
         second = parseFloat(display);
-      } else{
+      } else {
         second = parseInt(display);
       }
-      
 
       switch (holdOperator) {
         case "+":
           let sum = first + second;
 
           if (sum.toString().length > 11) {
-
             setDisplay(sum.toExponential(6));
           } else {
             setDisplay(sum);
@@ -212,10 +200,9 @@ switch(holdOperator){
           setNewDisplay(true);
           setFirstNumber(sum);
 
-
-          if(operator != "="){
-          setHoldOperator(operator);
-          setHoldEquals(false);
+          if (operator != "=") {
+            setHoldOperator(operator);
+            setHoldEquals(false);
             setEqualNumber(null);
           } else {
             setHoldEquals(true);
@@ -235,9 +222,9 @@ switch(holdOperator){
           setFirstNumber(difference);
           setNewDisplay(true);
 
-          if(operator != "="){
-          setHoldOperator(operator);
-          setHoldEquals(false);
+          if (operator != "=") {
+            setHoldOperator(operator);
+            setHoldEquals(false);
             setEqualNumber(null);
           } else {
             setHoldEquals(true);
@@ -254,14 +241,14 @@ switch(holdOperator){
           }
           setFirstNumber(quotient);
           setNewDisplay(true);
-          if(operator != "="){
+          if (operator != "=") {
             setHoldOperator(operator);
             setHoldEquals(false);
-              setEqualNumber(null);
-            } else {
-              setHoldEquals(true);
-              setEqualNumber(second);
-            }
+            setEqualNumber(null);
+          } else {
+            setHoldEquals(true);
+            setEqualNumber(second);
+          }
           break;
         case "*":
           let product = first * second;
@@ -272,23 +259,18 @@ switch(holdOperator){
           }
           setFirstNumber(product);
           setNewDisplay(true);
-          if(operator != "="){
+          if (operator != "=") {
             setHoldOperator(operator);
             setHoldEquals(false);
-              setEqualNumber(null);
-            } else {
-              setHoldEquals(true);
-              setEqualNumber(second);
-            }
-          break;
-        case "=":
-          // code block
+            setEqualNumber(null);
+          } else {
+            setHoldEquals(true);
+            setEqualNumber(second);
+          }
           break;
         default:
-        // code block
       }
       if (operator == "=") {
-        // setHoldOperator(null);
         setHoldEquals(true);
       }
     }
@@ -302,7 +284,7 @@ switch(holdOperator){
 
         <div className="allButtons">
           <div className="leftSide">
-            <Specials />
+            <Specials handleSpecialClick={handleSpecialClick}/>
             <Numbers handleNumberClick={handleNumberClick} />
           </div>
 
