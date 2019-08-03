@@ -20,6 +20,7 @@ function App() {
   const [holdOperator, setHoldOperator] = useState(null);
   const [holdEquals, setHoldEquals] = useState(false);
   const [equalNumber, setEqualNumber] = useState(null);
+  const [holdSpecialC, setHoldSpecialC] = useState(false);
   // STEP 5 - After you get the components displaying using the provided data file, write your state hooks here.
   // Once the state hooks are in place write some functions to hold data in state and update that data depending on what it needs to be doing
   // Your functions should accept a parameter of the the item data being displayed to the DOM (ie - should recieve 5 if the user clicks on
@@ -27,8 +28,27 @@ function App() {
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
   function handleSpecialClick(specialString){
-    console.log(specialString, "in function");
+
+    if(specialString=="C" && holdSpecialC==false){
+      setDisplay("0");
+      setHoldSpecialC(true);
+    }
+
+    if(specialString=="C" && holdSpecialC==true){
+      setDisplay("0");
+      setHoldSpecialC(false);
+      setNewDisplay(false);
+      setFirstNumber(null);
+      setHoldOperator(null);
+      setHoldEquals(false);
+      setEqualNumber(null);
+    }
+
+
+
+
     if(specialString=="+/-"){
+      setHoldSpecialC(false);
       let newDisplayString = display.toString();
       if(newDisplayString[0] != "-"){
         newDisplayString = "-" + newDisplayString;
@@ -38,9 +58,15 @@ function App() {
       setDisplay(newDisplayString);
       
     }
+
+
+
+
+
   }
 
   function handleNumberClick(numberString) {
+    setHoldSpecialC(false);
     let newNumber;
 
     if (newDisplay == true) {
