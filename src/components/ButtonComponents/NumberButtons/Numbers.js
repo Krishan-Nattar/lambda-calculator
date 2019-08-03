@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import NumberButton from './NumberButton';
-import {numbers} from '../../../data';
+import React, { useState } from "react";
+import NumberButton from "./NumberButton";
+import { numbers } from "../../../data";
 
 //import any components needed
 
@@ -13,19 +13,9 @@ const Numbers = () => {
 
   return (
     <div className="numberButtons">
-     {numberState.map((item,index)=>{
-
-      if((index)%3==0){
-        return (
-        <NumberButton key={index} text={item}/>
-        );
-      } else{
-        return <NumberButton key={index} text={item}/>;
-      }
-      
-
-
-    })}
+      {numberState.map((item, index) => {
+        return <NumberButton key={index} text={item} />;
+      })}
     </div>
   );
 };
