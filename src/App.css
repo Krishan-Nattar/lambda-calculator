@@ -1,0 +1,40 @@
+.button{
+    background-color: skyblue;
+    color: white;
+    border-radius: 200px;
+    width: 60px;
+    height: 60px;
+    margin:10px;
+}
+.app{
+    margin: auto auto;
+}
+.logo-container{
+    
+    padding: 10px;
+    padding-bottom: 0;
+    
+}
+
+.container{
+    width:350px;
+    background-color:maroon;
+    margin: auto auto;
+    height:550px;
+    border-radius: 15px;
+}
+
+.allButtons{
+    display:flex;
+}
+.zero{
+    width:140px;
+}
+
+.display{
+    width:310px;
+    height: 60px;
+    border-radius:20px;
+    background-color:grey;
+    margin: 10px 10px;
+}
