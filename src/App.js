@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 // import {numbers, operators} from './data';
 import Numbers from "./components/ButtonComponents/NumberButtons/Numbers";
@@ -14,7 +14,7 @@ import Logo from "./components/DisplayComponents/Logo";
 import Display from "./components/DisplayComponents/Display";
 
 function App() {
-  
+  const [display, setDisplay] = useState("0");
   // STEP 5 - After you get the components displaying using the provided data file, write your state hooks here.
   // Once the state hooks are in place write some functions to hold data in state and update that data depending on what it needs to be doing
   // Your functions should accept a parameter of the the item data being displayed to the DOM (ie - should recieve 5 if the user clicks on
@@ -26,7 +26,7 @@ function App() {
     <div className="container">
       <div className="App">
         <Logo />
-        <Display />
+        <Display display={display}/>
 
         <div className="allButtons">
           <div className="leftSide">
