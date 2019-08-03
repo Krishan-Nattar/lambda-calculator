@@ -59,6 +59,12 @@ function App() {
       
     }
 
+    if(specialString=="%"){
+      let newNumber;
+      let newDisplayString = display.toString();
+      
+    }
+
 
 
 
