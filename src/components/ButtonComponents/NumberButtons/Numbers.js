@@ -10,10 +10,19 @@ const Numbers = () => {
   // STEP 2 - add the imported data to state
   const [button, setButton] = useState(numbers);
   return (
-    <div>
+    <div className="numberButtons">
      {button.map((item,index)=>{
-      // console.log(item,index);
-      return <NumberButton key={index} text={item}/>;
+
+      if((index)%3==0){
+        return (
+        <NumberButton key={index} text={item}/>
+        );
+      } else{
+        return <NumberButton key={index} text={item}/>;
+      }
+      
+
+
     })}
     </div>
   );

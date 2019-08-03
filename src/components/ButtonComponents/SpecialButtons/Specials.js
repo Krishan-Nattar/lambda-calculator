@@ -11,7 +11,7 @@ const Specials = (props) => {
   // STEP 2 - add the imported data to state
 // console.log(props);
   return (
-    <div>
+    <div className="specialButtons">
     {button.map((item,index)=>{
       // console.log(item,index);
       return <SpecialButton key={index} text={item}/>;
