@@ -22,8 +22,9 @@
 }
 .logo-container{
     
-    padding: 10px 10px 10px 10px;
+    padding: 20px 10px 10px 10px;
     padding-bottom: 0;
+    margin-left: 26px;
     align-self: flex-start;
 }
 
@@ -46,6 +47,7 @@
     /* align-items: center; */
     /* border: 1px solid rgb(255, 0, 170); */
     width:90%;
+    margin-bottom: 20px;
 }
 
 .leftSide{
@@ -100,10 +102,10 @@
 
 .display{
     /* width:310px; */
-    display:none;
-    width: 90%;
+    /* display:none; */
+    width: 230px;
     height: 60px;
-    border-radius:20px;
+    border-radius:50px;
     background-color:#323335;
     margin: 10px 10px;
 }
