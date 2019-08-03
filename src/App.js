@@ -86,14 +86,35 @@ function App() {
     }
 
     if (operator == "=" && newDisplay==true && holdEquals==true) {
+      let displayConvert;
+      let equalNumberConvert;
+
+      if(display.toString().includes(".")){
+        displayConvert = parseFloat(display);
+      } else{
+        displayConvert = parseInt(display);
+      }
+      if(equalNumber.toString().includes(".")){
+        equalNumberConvert = parseFloat(equalNumber);
+      } else{
+        equalNumberConvert = parseInt(equalNumber);
+      }
 
 //Need to account for exponents ******************************************************
 switch(holdOperator){
-  case "+":
-      let sum=display+equalNumber;
-      if ((sum).toString().length > 11) {
 
-        setDisplay((sum).toExponential(6));
+
+ 
+
+
+
+  case "+":
+      let sum=displayConvert+equalNumberConvert;
+      
+      if ((sum).toString().length > 11) {
+        console.log(typeof(sum));
+
+        setDisplay(sum.toExponential(6));
       } else {
         setDisplay(sum);
       }
@@ -104,7 +125,7 @@ switch(holdOperator){
   break;
   case "-":
 
-      let difference=display-equalNumber;
+      let difference=displayConvert-equalNumberConvert;
       if ((difference).toString().length > 11) {
 
         setDisplay((difference).toExponential(6));
@@ -113,14 +134,14 @@ switch(holdOperator){
       }
 
 
-      setDisplay(display - equalNumber);
+      // setDisplay(displayConvert - equalNumberConvert);
       setFirstNumber(null);
 
   break;
 
   case "*":
 
-      let product=display*equalNumber;
+      let product=displayConvert*equalNumberConvert;
       if ((product).toString().length > 11) {
 
         setDisplay((product).toExponential(6));
@@ -128,13 +149,13 @@ switch(holdOperator){
         setDisplay(product);
       }
 
-      setDisplay(display * equalNumber);
+      // setDisplay(displayConvert * equalNumberConvert);
       setFirstNumber(null);
 
   break;
 
   case "/":
-      let quotient=display/equalNumber;
+      let quotient=displayConvert/equalNumberConvert;
       if ((quotient).toString().length > 11) {
 
         setDisplay((quotient).toExponential(6));
@@ -142,7 +163,7 @@ switch(holdOperator){
         setDisplay(quotient);
       }
 
-      setDisplay(display / equalNumber);
+      // setDisplay(displayConvert / equalNumberConvert);
       setFirstNumber(null);
 
   break;
