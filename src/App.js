@@ -35,15 +35,15 @@ function App() {
     <div className="container">
       <Logo />
       <div className="App">
-      <Display />
-      
-      <div className="allButtons">
-        <div className="leftSide">
-          <Specials/>
-          <Numbers />
+        <Display />
+        
+        <div className="allButtons">
+          <div className="leftSide">
+            <Specials/>
+            <Numbers />
+          </div>
+          <Operators />
         </div>
-        <Operators />
-      </div>
       
         {/* STEP 4 - Render your components here and be sure to properly import/export all files */}
       </div>
