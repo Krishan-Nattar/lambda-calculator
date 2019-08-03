@@ -27,14 +27,16 @@ function App() {
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
-  function handleSpecialClick(specialString){
+  function handleSpecialClick(specialString) {
 
-    if(specialString=="C" && holdSpecialC==false){
+    //If C is pressed once, reset display
+    if (specialString == "C" && holdSpecialC == false) {
       setDisplay("0");
       setHoldSpecialC(true);
     }
 
-    if(specialString=="C" && holdSpecialC==true){
+    //If C is pressed twice, reset EVERYTHING
+    if (specialString == "C" && holdSpecialC == true) {
       setDisplay("0");
       setHoldSpecialC(false);
       setNewDisplay(false);
@@ -44,31 +46,29 @@ function App() {
       setEqualNumber(null);
     }
 
-
-
-
-    if(specialString=="+/-"){
+    //Add or remove negative sign
+    if (specialString == "+/-") {
       setHoldSpecialC(false);
       let newDisplayString = display.toString();
-      if(newDisplayString[0] != "-"){
+      if (newDisplayString[0] != "-") {
         newDisplayString = "-" + newDisplayString;
       } else {
         newDisplayString = newDisplayString.slice(1);
       }
       setDisplay(newDisplayString);
-      
     }
 
-    if(specialString=="%"){
-      let newNumber;
-      let newDisplayString = display.toString();
-      
+    // Divide current display by 100
+    if (specialString == "%") {
+      let newNumber = parseFloat(display);
+      newNumber = newNumber / 100;
+
+      if (newNumber.toString().length > 11) {
+        setDisplay(newNumber.toExponential(6));
+      } else {
+        setDisplay(newNumber);
+      }
     }
-
-
-
-
-
   }
 
   function handleNumberClick(numberString) {
@@ -90,7 +90,7 @@ function App() {
     } else if (display.length === 11) {
       //Max display length is 11. This leaves room for a negative at the front
       return;
-    } else if (display.includes(".") && numberString === ".") {
+    } else if (display.toString().includes(".") && numberString === ".") {
       //If display already includes decimal, don't add another
       return;
     } else if (display === "0" && numberString != ".") {
@@ -129,6 +129,9 @@ function App() {
       setHoldOperator(operator);
     }
 
+
+    //This function allows pressing the equals sign multiple times
+    //To repeat the previous operation
     if (operator == "=" && newDisplay == true && holdEquals == true) {
       let displayConvert;
       let equalNumberConvert;
@@ -204,7 +207,6 @@ function App() {
       firstNumber != null &&
       newDisplay == false
     ) {
-
       let first;
       let second;
 
@@ -213,7 +215,7 @@ function App() {
       } else {
         first = parseInt(firstNumber);
       }
-      if (display.includes(".")) {
+      if (display.toString().includes(".")) {
         second = parseFloat(display);
       } else {
         second = parseInt(display);
@@ -316,7 +318,7 @@ function App() {
 
         <div className="allButtons">
           <div className="leftSide">
-            <Specials handleSpecialClick={handleSpecialClick}/>
+            <Specials handleSpecialClick={handleSpecialClick} />
             <Numbers handleNumberClick={handleNumberClick} />
           </div>
 
