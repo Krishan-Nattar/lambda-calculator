@@ -8,10 +8,12 @@ import {numbers} from '../../../data';
 
 const Numbers = () => {
   // STEP 2 - add the imported data to state
-  const [button, setButton] = useState(numbers);
+
+  const [numberState, setNumberState] = useState(numbers);
+
   return (
     <div className="numberButtons">
-     {button.map((item,index)=>{
+     {numberState.map((item,index)=>{
 
       if((index)%3==0){
         return (
