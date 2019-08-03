@@ -28,7 +28,6 @@ function App() {
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
   function handleSpecialClick(specialString) {
-
     //If C is pressed once, reset display
     if (specialString == "C" && holdSpecialC == false) {
       setDisplay("0");
@@ -128,7 +127,6 @@ function App() {
     ) {
       setHoldOperator(operator);
     }
-
 
     //This function allows pressing the equals sign multiple times
     //To repeat the previous operation

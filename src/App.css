@@ -77,12 +77,10 @@
   background-color: #323335;
   margin: 10px 10px;
   color:white;
-  /* text-align: right; */
   display:flex;
   justify-content: flex-end;
   align-items: center;
   font-size: 2rem;
-  /* margin-right: 20px; */
 }
 .displayContent{
   margin-right: 15px;
