@@ -18,6 +18,8 @@ function App() {
   const [newDisplay, setNewDisplay] = useState(false);
   const [firstNumber, setFirstNumber] = useState(null);
   const [holdOperator, setHoldOperator] = useState(null);
+  const [holdEquals, setHoldEquals] = useState(false);
+  const [equalNumber, setEqualNumber] = useState(null);
   // STEP 5 - After you get the components displaying using the provided data file, write your state hooks here.
   // Once the state hooks are in place write some functions to hold data in state and update that data depending on what it needs to be doing
   // Your functions should accept a parameter of the the item data being displayed to the DOM (ie - should recieve 5 if the user clicks on
@@ -27,125 +29,165 @@ function App() {
   function handleNumberClick(numberString) {
     let newNumber;
 
-    if(newDisplay==true){
-      if (display === "0" && numberString != ".") { 
+    if (newDisplay == true) {
+      if (display === "0" && numberString != ".") {
         newNumber = numberString;
         setNewDisplay(false);
-      } else if (display === "0" && numberString === ".") { //If display is only 0, make a new decimal "0."
+      } else if (display === "0" && numberString === ".") {
+        //If display is only 0, make a new decimal "0."
         newNumber = display + numberString;
         setNewDisplay(false);
       } else {
         newNumber = numberString; //Start new display string
         setNewDisplay(false);
       }
-    }else if (display.length === 11) { //Max display length is 11. This leaves room for a negative at the front
+    } else if (display.length === 11) {
+      //Max display length is 11. This leaves room for a negative at the front
       return;
-    } else if (display.includes(".") && numberString === ".") { //If display already includes decimal, don't add another
+    } else if (display.includes(".") && numberString === ".") {
+      //If display already includes decimal, don't add another
       return;
-    } else if (display === "0" && numberString != ".") { 
+    } else if (display === "0" && numberString != ".") {
       newNumber = numberString;
-    } else if (display === "0" && numberString === ".") { //If display is only 0, make a new decimal "0."
+    } else if (display === "0" && numberString === ".") {
+      //If display is only 0, make a new decimal "0."
       newNumber = display + numberString;
     } else {
       newNumber = display + numberString; //Add to the display string
     }
-    
+
     setDisplay(newNumber); //Push to display
   }
 
   function handleOperatorClick(operator) {
-
-
-    if((operator==="+" || operator==="-" || operator==="/" || operator==="*" ) && firstNumber === null){
+    
+    // console.log(typeof(3.55));
+    if (
+      (operator === "+" ||
+        operator === "-" ||
+        operator === "/" ||
+        operator === "*") &&
+      firstNumber === null
+    ) {
       setFirstNumber(display);
       setHoldOperator(operator);
       setNewDisplay(true);
     }
 
-    if((operator==="+" || operator==="-" || operator==="/" || operator==="*" ) && firstNumber != null && newDisplay==true){
+    if (
+      (operator === "+" ||
+        operator === "-" ||
+        operator === "/" ||
+        operator === "*") &&
+      firstNumber != null &&
+      newDisplay == true
+    ) {
       // setFirstNumber(display);
       setHoldOperator(operator);
       // setNewDisplay(true);
     }
 
-    if((operator==="+" || operator==="-" || operator==="/" || operator==="*" || operator==="=" ) && firstNumber != null && newDisplay==false){
-      // setFirstNumber(display);
-      let first = parseInt(firstNumber);
-      let second = parseInt(display);
-      switch(holdOperator) {
-        case "+":
-          let sum = first+second;
-          // console.log(sum.length);
-          if (sum.toString().length>11){
+    if (operator == "=" && newDisplay==true) {
+      setHoldEquals(true);
+      if (equalNumber != null) {
+        //run calculations on hold operator. Display (operator) equalNumber
+      }
+    }
 
+    if (
+      (operator === "+" ||
+        operator === "-" ||
+        operator === "/" ||
+        operator === "*" ||
+        operator === "=") &&
+      firstNumber != null &&
+      newDisplay == false
+    ) {
+      // setFirstNumber(display);
+      
+      let first;
+      let second;
+      if(firstNumber.toString().includes(".")){
+        first = parseFloat(firstNumber);
+      } else{
+        first = parseInt(firstNumber);
+      }
+      if(display.includes(".")){
+        second = parseFloat(display);
+      } else{
+        second = parseInt(display);
+      }
+      
+      // second = parseInt(display);
+      switch (holdOperator) {
+        case "+":
+          let sum = first + second;
+          // console.log(sum.length);
+          if (sum.toString().length > 11) {
             // Number.parseFloat(sum).toExponential
             setDisplay(sum.toExponential(6));
-          } else{
+          } else {
             setDisplay(sum);
           }
-          
-          
+
           setNewDisplay(true);
           // if(operator != "="){
-            setFirstNumber(sum);
-            setHoldOperator(operator);
+          setFirstNumber(sum);
+          setHoldOperator(operator);
           // }
-          
+
           break;
         case "-":
-            let difference = first-second;
+          let difference = first - second;
 
-            if(difference.toString().length>11){
-              setDisplay(difference.toExponential(6));
-            } else{
-              setDisplay(difference);
-            }
-            
-            setFirstNumber(difference);
-            setNewDisplay(true);
-            setHoldOperator(operator);
+          if (difference.toString().length > 11) {
+            setDisplay(difference.toExponential(6));
+          } else {
+            setDisplay(difference);
+          }
+
+          setFirstNumber(difference);
+          setNewDisplay(true);
+          setHoldOperator(operator);
           // code block
           break;
-          case "/":
-              let quotient = first/second;
-              if(quotient.toString().length>11){
-                setDisplay(quotient.toExponential(6));
-              } else{
-                setDisplay(quotient);
-              }
-              setFirstNumber(quotient);
-              setNewDisplay(true);
-              setHoldOperator(operator);
+        case "/":
+          let quotient = first / second;
+          if (quotient.toString().length > 11) {
+            setDisplay(quotient.toExponential(6));
+          } else {
+            setDisplay(quotient);
+          }
+          setFirstNumber(quotient);
+          setNewDisplay(true);
+          setHoldOperator(operator);
           // code block
           break;
-          case "*":
-              let product = first*second;
-              if(product.toString().length>11){
-                setDisplay(product.toExponential(6));
-              } else{
-                setDisplay(product);
-              }
-              setFirstNumber(product);
-              setNewDisplay(true);
-              setHoldOperator(operator);
+        case "*":
+          let product = first * second;
+          if (product.toString().length > 11) {
+            setDisplay(product.toExponential(6));
+          } else {
+            setDisplay(product);
+          }
+          setFirstNumber(product);
+          setNewDisplay(true);
+          setHoldOperator(operator);
           // code block
           break;
-          case "=":
+        case "=":
           // code block
           break;
         default:
-          // code block
+        // code block
       }
-      if(operator=="="){
+      if (operator == "=") {
         // setHoldOperator(null);
-
+        setHoldEquals(true);
       }
-      
-
     }
 
     // console.log(display);
-    
   }
 
   return (
