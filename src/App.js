@@ -82,16 +82,73 @@ function App() {
       firstNumber != null &&
       newDisplay == true
     ) {
-      // setFirstNumber(display);
       setHoldOperator(operator);
-      // setNewDisplay(true);
     }
 
-    if (operator == "=" && newDisplay==true) {
-      setHoldEquals(true);
-      if (equalNumber != null) {
-        //run calculations on hold operator. Display (operator) equalNumber
+    if (operator == "=" && newDisplay==true && holdEquals==true) {
+
+//Need to account for exponents ******************************************************
+switch(holdOperator){
+  case "+":
+      let sum=display+equalNumber;
+      if ((sum).toString().length > 11) {
+
+        setDisplay((sum).toExponential(6));
+      } else {
+        setDisplay(sum);
       }
+
+    
+    setFirstNumber(null);
+
+  break;
+  case "-":
+
+      let difference=display-equalNumber;
+      if ((difference).toString().length > 11) {
+
+        setDisplay((difference).toExponential(6));
+      } else {
+        setDisplay(difference);
+      }
+
+
+      setDisplay(display - equalNumber);
+      setFirstNumber(null);
+
+  break;
+
+  case "*":
+
+      let product=display*equalNumber;
+      if ((product).toString().length > 11) {
+
+        setDisplay((product).toExponential(6));
+      } else {
+        setDisplay(product);
+      }
+
+      setDisplay(display * equalNumber);
+      setFirstNumber(null);
+
+  break;
+
+  case "/":
+      let quotient=display/equalNumber;
+      if ((quotient).toString().length > 11) {
+
+        setDisplay((quotient).toExponential(6));
+      } else {
+        setDisplay(quotient);
+      }
+
+      setDisplay(display / equalNumber);
+      setFirstNumber(null);
+
+  break;
+}
+
+
     }
 
     if (
@@ -107,6 +164,7 @@ function App() {
       
       let first;
       let second;
+
       if(firstNumber.toString().includes(".")){
         first = parseFloat(firstNumber);
       } else{
@@ -118,23 +176,30 @@ function App() {
         second = parseInt(display);
       }
       
-      // second = parseInt(display);
+
       switch (holdOperator) {
         case "+":
           let sum = first + second;
-          // console.log(sum.length);
+
           if (sum.toString().length > 11) {
-            // Number.parseFloat(sum).toExponential
+
             setDisplay(sum.toExponential(6));
           } else {
             setDisplay(sum);
           }
 
           setNewDisplay(true);
-          // if(operator != "="){
           setFirstNumber(sum);
+
+
+          if(operator != "="){
           setHoldOperator(operator);
-          // }
+          setHoldEquals(false);
+            setEqualNumber(null);
+          } else {
+            setHoldEquals(true);
+            setEqualNumber(second);
+          }
 
           break;
         case "-":
@@ -148,8 +213,16 @@ function App() {
 
           setFirstNumber(difference);
           setNewDisplay(true);
+
+          if(operator != "="){
           setHoldOperator(operator);
-          // code block
+          setHoldEquals(false);
+            setEqualNumber(null);
+          } else {
+            setHoldEquals(true);
+            setEqualNumber(second);
+          }
+
           break;
         case "/":
           let quotient = first / second;
@@ -160,8 +233,14 @@ function App() {
           }
           setFirstNumber(quotient);
           setNewDisplay(true);
-          setHoldOperator(operator);
-          // code block
+          if(operator != "="){
+            setHoldOperator(operator);
+            setHoldEquals(false);
+              setEqualNumber(null);
+            } else {
+              setHoldEquals(true);
+              setEqualNumber(second);
+            }
           break;
         case "*":
           let product = first * second;
@@ -172,8 +251,14 @@ function App() {
           }
           setFirstNumber(product);
           setNewDisplay(true);
-          setHoldOperator(operator);
-          // code block
+          if(operator != "="){
+            setHoldOperator(operator);
+            setHoldEquals(false);
+              setEqualNumber(null);
+            } else {
+              setHoldEquals(true);
+              setEqualNumber(second);
+            }
           break;
         case "=":
           // code block
@@ -186,8 +271,6 @@ function App() {
         setHoldEquals(true);
       }
     }
-
-    // console.log(display);
   }
 
   return (
